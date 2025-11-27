@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TODO-APP</title>
+  </head>
+  <body>
+    <div>
+      <input type="text" />
+      <button onclick="addTodo()">Add TODO</button>
+    </div>
+    <div id="todo-container"></div>
+    <script>
+      let counterValue = 1;
+
+      function deleteTodo(id) {
+        console.log("Delete Todo ID:", id);
+        const removeComponent = document.getElementById(id);
+        removeComponent.parentElement.removeChild(removeComponent);
+      }
+
+      // TODO Update Need to think of
+      function updateTodo(id) {
+        console.log("Update TODO ID:", id);
+        const updateComponent = document.getElementById(id);
+        const spanHtml = updateComponent.querySelector("span");
+        spanHtml.innerHTML = value;
+      }
+
+      function addTodo() {
+        const inputHtml = document.querySelector("input");
+        const inputValue = inputHtml.value;
+        inputHtml.value = "";
+        const newDiv = document.createElement("div");
+        newDiv.setAttribute("id", counterValue);
+
+        const updateCompoent =
+          "<button onclick='updateTodo(" +
+          counterValue +
+          ")'> Update </button>";
+        const buttonCompoent =
+          "<button onclick='deleteTodo(" +
+          counterValue +
+          ")'> Delete </button>";
+        const spanComponent =
+          "<span>" + inputValue + "</span>" + buttonCompoent + updateCompoent;
+
+        newDiv.innerHTML = spanComponent;
+        document.querySelector("#todo-container").appendChild(newDiv);
+        counterValue++;
+      }
+    </script>
+  </body>
+</html>
