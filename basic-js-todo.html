@@ -20,18 +20,24 @@
         removeComponent.parentElement.removeChild(removeComponent);
       }
 
+      function clearInput(inputHtml) {
+        inputHtml.value = "";
+      }
+
       // TODO Update Need to think of
       function updateTodo(id) {
         console.log("Update TODO ID:", id);
         const updateComponent = document.getElementById(id);
         const spanHtml = updateComponent.querySelector("span");
-        // spanHtml.innerHTML = value;
+        const inputValue = document.querySelector("input");
+        spanHtml.innerHTML = inputValue.value;
+        clearInput(inputValue);
       }
 
       function addTodo() {
         const inputHtml = document.querySelector("input");
         const inputValue = inputHtml.value;
-        inputHtml.value = "";
+        clearInput(inputHtml);
         const newDiv = document.createElement("div");
         newDiv.setAttribute("id", counterValue);
 
