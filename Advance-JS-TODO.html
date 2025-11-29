@@ -33,7 +33,7 @@
     <div class="TODO">
       <div>
         <input type="text" placeholder="Enter TODO Item" />
-        <button onclick="addTodo()">Add TODO</button>
+        <button type="submit" onclick="addTodo()">Add TODO</button>
       </div>
       <div id="container"></div>
     </div>
@@ -41,6 +41,15 @@
       let renderArray = [];
       let index = 1;
       let updateObj = null;
+
+      const inputHtml = document.querySelector("input");
+      inputHtml.addEventListener("keydown", (event) => {
+        if (event.key == "Enter") {
+          event.preventDefault();
+          addTodo();
+        }
+      });
+
       function addTodo() {
         console.log(updateObj);
         console.log(index);
