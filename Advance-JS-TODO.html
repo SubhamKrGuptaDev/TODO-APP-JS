@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Advance TODO</title>
+    <style>
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .btn-style {
+        color: aliceblue;
+      }
+      .update {
+        background-color: rgb(156, 125, 0);
+      }
+      .delete {
+        background-color: rgb(255, 55, 0);
+      }
+      .TODO {
+        background-color: blanchedalmond;
+        padding: 10px 30px;
+      }
+      .todo-list {
+        display: flex;
+        gap: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="TODO">
+      <div>
+        <input type="text" placeholder="Enter TODO Item" />
+        <button onclick="addTodo()">Add TODO</button>
+      </div>
+      <div id="container"></div>
+    </div>
+    <script>
+      let renderArray = [];
+      let index = 1;
+      let updateObj = null;
+      function addTodo() {
+        console.log(updateObj);
+        console.log(index);
+        console.log(renderArray);
+        const inputHtml = document.querySelector("input");
+        if (updateObj) {
+          let isFound = false;
+          renderArray.map((obj) => {
+            if (obj.index == updateObj.index) {
+              isFound = true;
+              obj.text = inputHtml.value;
+            }
+          });
+          if (isFound) {
+            updateObj = null;
+          }
+        } else {
+          renderArray.push({
+            text: inputHtml.value,
+            index: index,
+          });
+          index++;
+        }
+        clearInput(inputHtml);
+        render();
+      }
+
+      function deleteTodo(id) {
+        console.log("Delete TODo ID:", id);
+        renderArray = renderArray.filter((obj) => id != obj.index);
+        render();
+      }
+
+      function updateTodo(id) {
+        const inputHtml = document.querySelector("input");
+        renderArray.map((obj) => {
+          if (id === obj.index) {
+            updateObj = obj;
+            inputHtml.value = obj.text;
+          }
+        });
+      }
+
+      function clearInput(objHtml) {
+        objHtml.value = "";
+      }
+
+      function clearHtml(objHtml) {
+        objHtml.innerHTML = "";
+      }
+
+      function render() {
+        const container = document.querySelector("#container");
+        clearHtml(container);
+        renderArray.forEach((obj) => {
+          const newEle = document.createElement("div");
+          newEle.setAttribute("id", obj.index);
+          newEle.setAttribute("class", "todo-list");
+          const updateCompoent =
+            "<button class='update btn-style' onclick='updateTodo(" +
+            obj.index +
+            ")'> Update </button>";
+          const buttonCompoent =
+            "<button class='delete btn-style' onclick='deleteTodo(" +
+            obj.index +
+            ")'> Delete </button>";
+          const spanComponent =
+            "<span>" + obj.text + "</span>" + buttonCompoent + updateCompoent;
+          newEle.innerHTML = spanComponent;
+          container.appendChild(newEle);
+        });
+      }
+    </script>
+  </body>
+</html>
